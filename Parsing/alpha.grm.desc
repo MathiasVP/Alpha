@@ -1,0 +1,5186 @@
+1 shift/reduce conflict
+
+error:  state 227: shift/reduce conflict (shift ELSE, reduce by rule 58)
+
+state 0:
+
+	program : . declarations 
+
+	ID	shift 14
+	LBRACK	shift 13
+	INTERFACE	shift 12
+	CLASS	shift 11
+	FUN	shift 10
+	VAR	shift 9
+
+	program	goto 274
+	declarations	goto 8
+	functionDecl	goto 7
+	functionHeader	goto 6
+	varDecl	goto 5
+	classDecl	goto 4
+	interfaceDecl	goto 3
+	varDeclMaybeAssign	goto 2
+	ty	goto 1
+
+	.	reduce by rule 5
+
+
+state 1:
+
+	varDecl : ty . ID 
+
+	ID	shift 15
+
+
+	.	error
+
+
+state 2:
+
+	declarations : varDeclMaybeAssign . SEMICOLON declarations 
+
+	SEMICOLON	shift 16
+
+
+	.	error
+
+
+state 3:
+
+	declarations : interfaceDecl . declarations 
+
+	ID	shift 14
+	LBRACK	shift 13
+	INTERFACE	shift 12
+	CLASS	shift 11
+	FUN	shift 10
+	VAR	shift 9
+
+	declarations	goto 17
+	functionDecl	goto 7
+	functionHeader	goto 6
+	varDecl	goto 5
+	classDecl	goto 4
+	interfaceDecl	goto 3
+	varDeclMaybeAssign	goto 2
+	ty	goto 1
+
+	.	reduce by rule 5
+
+
+state 4:
+
+	declarations : classDecl . declarations 
+
+	ID	shift 14
+	LBRACK	shift 13
+	INTERFACE	shift 12
+	CLASS	shift 11
+	FUN	shift 10
+	VAR	shift 9
+
+	declarations	goto 18
+	functionDecl	goto 7
+	functionHeader	goto 6
+	varDecl	goto 5
+	classDecl	goto 4
+	interfaceDecl	goto 3
+	varDeclMaybeAssign	goto 2
+	ty	goto 1
+
+	.	reduce by rule 5
+
+
+state 5:
+
+	varDeclMaybeAssign : varDecl . varDeclMaybeAssign' 
+
+	ASSIGN	shift 20
+
+	varDeclMaybeAssign'	goto 19
+
+	.	reduce by rule 38
+
+
+state 6:
+
+	functionDecl : functionHeader . compoundStat 
+
+	LBRACE	shift 22
+
+	compoundStat	goto 21
+
+	.	error
+
+
+state 7:
+
+	declarations : functionDecl . declarations 
+
+	ID	shift 14
+	LBRACK	shift 13
+	INTERFACE	shift 12
+	CLASS	shift 11
+	FUN	shift 10
+	VAR	shift 9
+
+	declarations	goto 23
+	functionDecl	goto 7
+	functionHeader	goto 6
+	varDecl	goto 5
+	classDecl	goto 4
+	interfaceDecl	goto 3
+	varDeclMaybeAssign	goto 2
+	ty	goto 1
+
+	.	reduce by rule 5
+
+
+state 8:
+
+	program : declarations .  (reduce by rule 0)
+
+
+
+	.	reduce by rule 0
+
+
+state 9:
+
+	varDeclMaybeAssign : VAR . ID ASSIGN exp 
+
+	ID	shift 24
+
+
+	.	error
+
+
+state 10:
+
+	functionHeader : FUN . ID LPAREN declList RPAREN ARROW ty 
+	ty : FUN . LPAREN typeList RPAREN ARROW ty 
+
+	ID	shift 26
+	LPAREN	shift 25
+
+
+	.	error
+
+
+state 11:
+
+	classDecl : CLASS . ID classParent LBRACE classBody RBRACE 
+
+	ID	shift 27
+
+
+	.	error
+
+
+state 12:
+
+	interfaceDecl : INTERFACE . ID interfaceParent LBRACE interfaceBody RBRACE 
+
+	ID	shift 28
+
+
+	.	error
+
+
+state 13:
+
+	ty : LBRACK . ty RBRACK 
+
+	ID	shift 14
+	LBRACK	shift 13
+	FUN	shift 30
+
+	ty	goto 29
+
+	.	error
+
+
+state 14:
+
+	ty : ID .  (reduce by rule 40)
+
+
+
+	.	reduce by rule 40
+
+
+state 15:
+
+	varDecl : ty ID .  (reduce by rule 12)
+
+
+
+	.	reduce by rule 12
+
+
+state 16:
+
+	declarations : varDeclMaybeAssign SEMICOLON . declarations 
+
+	ID	shift 14
+	LBRACK	shift 13
+	INTERFACE	shift 12
+	CLASS	shift 11
+	FUN	shift 10
+	VAR	shift 9
+
+	declarations	goto 31
+	functionDecl	goto 7
+	functionHeader	goto 6
+	varDecl	goto 5
+	classDecl	goto 4
+	interfaceDecl	goto 3
+	varDeclMaybeAssign	goto 2
+	ty	goto 1
+
+	.	reduce by rule 5
+
+
+state 17:
+
+	declarations : interfaceDecl declarations .  (reduce by rule 3)
+
+
+
+	.	reduce by rule 3
+
+
+state 18:
+
+	declarations : classDecl declarations .  (reduce by rule 2)
+
+
+
+	.	reduce by rule 2
+
+
+state 19:
+
+	varDeclMaybeAssign : varDecl varDeclMaybeAssign' .  (reduce by rule 35)
+
+
+
+	.	reduce by rule 35
+
+
+state 20:
+
+	varDeclMaybeAssign' : ASSIGN . exp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 55
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 21:
+
+	functionDecl : functionHeader compoundStat .  (reduce by rule 6)
+
+
+
+	.	reduce by rule 6
+
+
+state 22:
+
+	compoundStat : LBRACE . statList RBRACE 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 77
+	expStat	goto 76
+	compoundStat	goto 75
+	statList	goto 74
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	reduce by rule 55
+
+
+state 23:
+
+	declarations : functionDecl declarations .  (reduce by rule 1)
+
+
+
+	.	reduce by rule 1
+
+
+state 24:
+
+	varDeclMaybeAssign : VAR ID . ASSIGN exp 
+
+	ASSIGN	shift 85
+
+
+	.	error
+
+
+state 25:
+
+	ty : FUN LPAREN . typeList RPAREN ARROW ty 
+
+	ID	shift 14
+	LBRACK	shift 13
+	FUN	shift 30
+
+	ty	goto 88
+	typeList	goto 87
+	typeList'	goto 86
+
+	.	reduce by rule 43
+
+
+state 26:
+
+	functionHeader : FUN ID . LPAREN declList RPAREN ARROW ty 
+
+	LPAREN	shift 89
+
+
+	.	error
+
+
+state 27:
+
+	classDecl : CLASS ID . classParent LBRACE classBody RBRACE 
+
+	IMPLEMENTS	shift 92
+	EXTENDS	shift 91
+
+	classParent	goto 90
+
+	.	reduce by rule 18
+
+
+state 28:
+
+	interfaceDecl : INTERFACE ID . interfaceParent LBRACE interfaceBody RBRACE 
+
+	EXTENDS	shift 94
+
+	interfaceParent	goto 93
+
+	.	reduce by rule 31
+
+
+state 29:
+
+	ty : LBRACK ty . RBRACK 
+
+	RBRACK	shift 95
+
+
+	.	error
+
+
+state 30:
+
+	ty : FUN . LPAREN typeList RPAREN ARROW ty 
+
+	LPAREN	shift 25
+
+
+	.	error
+
+
+state 31:
+
+	declarations : varDeclMaybeAssign SEMICOLON declarations .  (reduce by rule 4)
+
+
+
+	.	reduce by rule 4
+
+
+state 32:
+
+	postfixExp : postDecExp .  (reduce by rule 119)
+
+
+
+	.	reduce by rule 119
+
+
+state 33:
+
+	postfixExp : postIncExp .  (reduce by rule 118)
+
+
+
+	.	reduce by rule 118
+
+
+state 34:
+
+	primaryExp : literalExp .  (reduce by rule 127)
+
+
+
+	.	reduce by rule 127
+
+
+state 35:
+
+	callOrConsExp : primaryExp .  (reduce by rule 120)
+
+
+
+	.	reduce by rule 120
+
+
+state 36:
+
+	fieldAccess : callOrConsExp . DOT ID 
+	arrayAccess : callOrConsExp . LBRACK exp RBRACK 
+	postfixExp : callOrConsExp .  (reduce by rule 117)
+	callOrConsExp : callOrConsExp . LPAREN expList RPAREN 
+
+	LPAREN	shift 98
+	LBRACK	shift 97
+	DOT	shift 96
+
+
+	.	reduce by rule 117
+
+
+state 37:
+
+	unaryExpNotPlusMinus : postfixExp .  (reduce by rule 115)
+	postIncExp : postfixExp . PLUSPLUS 
+	postDecExp : postfixExp . MINUSMINUS 
+
+	PLUSPLUS	shift 100
+	MINUSMINUS	shift 99
+
+
+	.	reduce by rule 115
+
+
+state 38:
+
+	unaryExp : unaryExpNotPlusMinus .  (reduce by rule 108)
+
+
+
+	.	reduce by rule 108
+
+
+state 39:
+
+	unaryExp : preDecExp .  (reduce by rule 110)
+
+
+
+	.	reduce by rule 110
+
+
+state 40:
+
+	unaryExp : preIncExp .  (reduce by rule 109)
+
+
+
+	.	reduce by rule 109
+
+
+state 41:
+
+	mulExp : unaryExp .  (reduce by rule 105)
+
+
+
+	.	reduce by rule 105
+
+
+state 42:
+
+	addExp : mulExp .  (reduce by rule 102)
+	mulExp : mulExp . TIMES unaryExp 
+	mulExp : mulExp . DIVIDE unaryExp 
+
+	TIMES	shift 102
+	DIVIDE	shift 101
+
+
+	.	reduce by rule 102
+
+
+state 43:
+
+	relExp : addExp .  (reduce by rule 97)
+	addExp : addExp . PLUS mulExp 
+	addExp : addExp . MINUS mulExp 
+
+	PLUS	shift 104
+	MINUS	shift 103
+
+
+	.	reduce by rule 97
+
+
+state 44:
+
+	eqExp : relExp .  (reduce by rule 94)
+	relExp : relExp . GT addExp 
+	relExp : relExp . LT addExp 
+	relExp : relExp . GE addExp 
+	relExp : relExp . LE addExp 
+
+	LT	shift 108
+	LE	shift 107
+	GT	shift 106
+	GE	shift 105
+
+
+	.	reduce by rule 94
+
+
+state 45:
+
+	andExp : eqExp .  (reduce by rule 92)
+	eqExp : eqExp . EQ relExp 
+	eqExp : eqExp . NEQ relExp 
+
+	EQ	shift 110
+	NEQ	shift 109
+
+
+	.	reduce by rule 92
+
+
+state 46:
+
+	orExp : andExp .  (reduce by rule 90)
+	andExp : andExp . AND eqExp 
+
+	AND	shift 111
+
+
+	.	reduce by rule 90
+
+
+state 47:
+
+	assignmentExp : orExp .  (reduce by rule 77)
+	orExp : orExp . OR andExp 
+
+	OR	shift 112
+
+
+	.	reduce by rule 77
+
+
+state 48:
+
+	lvalue : arrayAccess .  (reduce by rule 82)
+
+
+
+	.	reduce by rule 82
+
+
+state 49:
+
+	lvalue : fieldAccess .  (reduce by rule 81)
+
+
+
+	.	reduce by rule 81
+
+
+state 50:
+
+	primaryExp : arrayAlloc .  (reduce by rule 130)
+
+
+
+	.	reduce by rule 130
+
+
+state 51:
+
+	assignment : lvalue . assignOperator exp 
+	primaryExp : lvalue .  (reduce by rule 129)
+
+	PLUSASSIGN	shift 118
+	MINUSASSIGN	shift 117
+	TIMESASSIGN	shift 116
+	DIVIDEASSIGN	shift 115
+	ASSIGN	shift 114
+
+	assignOperator	goto 113
+
+	.	reduce by rule 129
+
+
+state 52:
+
+	assignmentExp : assignment .  (reduce by rule 78)
+
+
+
+	.	reduce by rule 78
+
+
+state 53:
+
+	exp : assignmentExp .  (reduce by rule 75)
+
+
+
+	.	reduce by rule 75
+
+
+state 54:
+
+	primaryExp : lambdaExp .  (reduce by rule 131)
+
+
+
+	.	reduce by rule 131
+
+
+state 55:
+
+	varDeclMaybeAssign' : ASSIGN exp .  (reduce by rule 37)
+
+
+
+	.	reduce by rule 37
+
+
+state 56:
+
+	arrayAlloc : ARRAY . LT ty GT LPAREN exp RPAREN 
+
+	LT	shift 119
+
+
+	.	error
+
+
+state 57:
+
+	primaryExp : THIS .  (reduce by rule 128)
+
+
+
+	.	reduce by rule 128
+
+
+state 58:
+
+	preDecExp : MINUSMINUS . unaryExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	unaryExp	goto 120
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 59:
+
+	preIncExp : PLUSPLUS . unaryExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	unaryExp	goto 122
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 60:
+
+	unaryExpNotPlusMinus : BANG . unaryExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	unaryExp	goto 123
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 61:
+
+	unaryExp : MINUS . unaryExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	unaryExp	goto 124
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 62:
+
+	unaryExp : PLUS . unaryExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	unaryExp	goto 125
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 63:
+
+	lambdaExp : LPAREN . declList RPAREN ARROW ty compoundStat 
+	primaryExp : LPAREN . exp RPAREN 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	FUN	shift 30
+	ARRAY	shift 56
+
+	declList	goto 129
+	declList'	goto 128
+	varDecl	goto 127
+	ty	goto 1
+	exp	goto 126
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	reduce by rule 9
+
+
+state 64:
+
+	literalExp : BOOL .  (reduce by rule 135)
+
+
+
+	.	reduce by rule 135
+
+
+state 65:
+
+	literalExp : FLOAT .  (reduce by rule 134)
+
+
+
+	.	reduce by rule 134
+
+
+state 66:
+
+	literalExp : CHAR .  (reduce by rule 137)
+
+
+
+	.	reduce by rule 137
+
+
+state 67:
+
+	literalExp : STRING .  (reduce by rule 136)
+
+
+
+	.	reduce by rule 136
+
+
+state 68:
+
+	literalExp : INT .  (reduce by rule 133)
+
+
+
+	.	reduce by rule 133
+
+
+state 69:
+
+	lvalue : ID .  (reduce by rule 80)
+
+
+
+	.	reduce by rule 80
+
+
+state 70:
+
+	expStat : exp .  (reduce by rule 52)
+
+
+
+	.	reduce by rule 52
+
+
+state 71:
+
+	stat : jumpStat . SEMICOLON 
+
+	SEMICOLON	shift 130
+
+
+	.	error
+
+
+state 72:
+
+	stat : iterationStat .  (reduce by rule 49)
+
+
+
+	.	reduce by rule 49
+
+
+state 73:
+
+	stat : selectionStat .  (reduce by rule 48)
+
+
+
+	.	reduce by rule 48
+
+
+state 74:
+
+	compoundStat : LBRACE statList . RBRACE 
+
+	RBRACE	shift 131
+
+
+	.	error
+
+
+state 75:
+
+	stat : compoundStat .  (reduce by rule 47)
+
+
+
+	.	reduce by rule 47
+
+
+state 76:
+
+	stat : expStat . SEMICOLON 
+
+	SEMICOLON	shift 132
+
+
+	.	error
+
+
+state 77:
+
+	statList : stat . statList 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 77
+	expStat	goto 76
+	compoundStat	goto 75
+	statList	goto 133
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	reduce by rule 55
+
+
+state 78:
+
+	stat : varDeclMaybeAssign . SEMICOLON 
+
+	SEMICOLON	shift 134
+
+
+	.	error
+
+
+state 79:
+
+	jumpStat : RETURN . exp 
+	jumpStat : RETURN .  (reduce by rule 73)
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 135
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	reduce by rule 73
+
+
+state 80:
+
+	jumpStat : BREAK .  (reduce by rule 74)
+
+
+
+	.	reduce by rule 74
+
+
+state 81:
+
+	iterationStat : FOR . LPAREN SEMICOLON SEMICOLON RPAREN stat 
+	iterationStat : FOR . LPAREN SEMICOLON SEMICOLON exp RPAREN stat 
+	iterationStat : FOR . LPAREN SEMICOLON exp SEMICOLON RPAREN stat 
+	iterationStat : FOR . LPAREN SEMICOLON exp SEMICOLON exp RPAREN stat 
+	iterationStat : FOR . LPAREN varDeclMaybeAssign SEMICOLON SEMICOLON RPAREN stat 
+	iterationStat : FOR . LPAREN varDeclMaybeAssign SEMICOLON SEMICOLON exp RPAREN stat 
+	iterationStat : FOR . LPAREN varDeclMaybeAssign SEMICOLON exp SEMICOLON RPAREN stat 
+	iterationStat : FOR . LPAREN varDeclMaybeAssign SEMICOLON exp SEMICOLON exp RPAREN stat 
+	iterationStat : FOR . LPAREN exp SEMICOLON SEMICOLON RPAREN stat 
+	iterationStat : FOR . LPAREN exp SEMICOLON SEMICOLON exp RPAREN stat 
+	iterationStat : FOR . LPAREN exp SEMICOLON exp SEMICOLON RPAREN stat 
+	iterationStat : FOR . LPAREN exp SEMICOLON exp SEMICOLON exp RPAREN stat 
+
+	LPAREN	shift 136
+
+
+	.	error
+
+
+state 82:
+
+	iterationStat : WHILE . LPAREN exp RPAREN stat 
+
+	LPAREN	shift 137
+
+
+	.	error
+
+
+state 83:
+
+	selectionStat : IF . LPAREN exp RPAREN stat selectionStat' 
+
+	LPAREN	shift 138
+
+
+	.	error
+
+
+state 84:
+
+	ty : ID .  (reduce by rule 40)
+	lvalue : ID .  (reduce by rule 80)
+
+	ID	reduce by rule 40
+	SEMICOLON	reduce by rule 80
+	LPAREN	reduce by rule 80
+	RPAREN	reduce by rule 80
+	LBRACK	reduce by rule 80
+	PLUS	reduce by rule 80
+	MINUS	reduce by rule 80
+	TIMES	reduce by rule 80
+	DIVIDE	reduce by rule 80
+	EQ	reduce by rule 80
+	NEQ	reduce by rule 80
+	LT	reduce by rule 80
+	LE	reduce by rule 80
+	GT	reduce by rule 80
+	GE	reduce by rule 80
+	PLUSPLUS	reduce by rule 80
+	MINUSMINUS	reduce by rule 80
+	PLUSASSIGN	reduce by rule 80
+	MINUSASSIGN	reduce by rule 80
+	TIMESASSIGN	reduce by rule 80
+	DIVIDEASSIGN	reduce by rule 80
+	AND	reduce by rule 80
+	OR	reduce by rule 80
+	ASSIGN	reduce by rule 80
+	DOT	reduce by rule 80
+
+
+	.	error
+
+
+state 85:
+
+	varDeclMaybeAssign : VAR ID ASSIGN . exp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 139
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 86:
+
+	typeList : typeList' .  (reduce by rule 42)
+
+
+
+	.	reduce by rule 42
+
+
+state 87:
+
+	ty : FUN LPAREN typeList . RPAREN ARROW ty 
+
+	RPAREN	shift 140
+
+
+	.	error
+
+
+state 88:
+
+	typeList' : ty . COMMA typeList' 
+	typeList' : ty .  (reduce by rule 45)
+
+	COMMA	shift 141
+
+
+	.	reduce by rule 45
+
+
+state 89:
+
+	functionHeader : FUN ID LPAREN . declList RPAREN ARROW ty 
+
+	ID	shift 14
+	LBRACK	shift 13
+	FUN	shift 30
+
+	declList	goto 142
+	declList'	goto 128
+	varDecl	goto 127
+	ty	goto 1
+
+	.	reduce by rule 9
+
+
+state 90:
+
+	classDecl : CLASS ID classParent . LBRACE classBody RBRACE 
+
+	LBRACE	shift 143
+
+
+	.	error
+
+
+state 91:
+
+	classParent : EXTENDS . ID COMMA IMPLEMENTS idList 
+	classParent : EXTENDS . ID 
+
+	ID	shift 144
+
+
+	.	error
+
+
+state 92:
+
+	classParent : IMPLEMENTS . idList COMMA EXTENDS ID 
+	classParent : IMPLEMENTS . idList 
+
+	ID	shift 146
+
+	idList	goto 145
+
+	.	error
+
+
+state 93:
+
+	interfaceDecl : INTERFACE ID interfaceParent . LBRACE interfaceBody RBRACE 
+
+	LBRACE	shift 147
+
+
+	.	error
+
+
+state 94:
+
+	interfaceParent : EXTENDS . ID 
+
+	ID	shift 148
+
+
+	.	error
+
+
+state 95:
+
+	ty : LBRACK ty RBRACK .  (reduce by rule 39)
+
+
+
+	.	reduce by rule 39
+
+
+state 96:
+
+	fieldAccess : callOrConsExp DOT . ID 
+
+	ID	shift 149
+
+
+	.	error
+
+
+state 97:
+
+	arrayAccess : callOrConsExp LBRACK . exp RBRACK 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 150
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 98:
+
+	callOrConsExp : callOrConsExp LPAREN . expList RPAREN 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 153
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	expList	goto 152
+	expList'	goto 151
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	reduce by rule 123
+
+
+state 99:
+
+	postDecExp : postfixExp MINUSMINUS .  (reduce by rule 139)
+
+
+
+	.	reduce by rule 139
+
+
+state 100:
+
+	postIncExp : postfixExp PLUSPLUS .  (reduce by rule 138)
+
+
+
+	.	reduce by rule 138
+
+
+state 101:
+
+	mulExp : mulExp DIVIDE . unaryExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	unaryExp	goto 154
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 102:
+
+	mulExp : mulExp TIMES . unaryExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	unaryExp	goto 155
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 103:
+
+	addExp : addExp MINUS . mulExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	mulExp	goto 156
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 104:
+
+	addExp : addExp PLUS . mulExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	mulExp	goto 157
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 105:
+
+	relExp : relExp GE . addExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	addExp	goto 158
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 106:
+
+	relExp : relExp GT . addExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	addExp	goto 159
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 107:
+
+	relExp : relExp LE . addExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	addExp	goto 160
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 108:
+
+	relExp : relExp LT . addExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	addExp	goto 161
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 109:
+
+	eqExp : eqExp NEQ . relExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	relExp	goto 162
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 110:
+
+	eqExp : eqExp EQ . relExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	relExp	goto 163
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 111:
+
+	andExp : andExp AND . eqExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	eqExp	goto 164
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 112:
+
+	orExp : orExp OR . andExp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	lambdaExp	goto 54
+	lvalue	goto 121
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	andExp	goto 165
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 113:
+
+	assignment : lvalue assignOperator . exp 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 166
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 114:
+
+	assignOperator : ASSIGN .  (reduce by rule 85)
+
+
+
+	.	reduce by rule 85
+
+
+state 115:
+
+	assignOperator : DIVIDEASSIGN .  (reduce by rule 89)
+
+
+
+	.	reduce by rule 89
+
+
+state 116:
+
+	assignOperator : TIMESASSIGN .  (reduce by rule 88)
+
+
+
+	.	reduce by rule 88
+
+
+state 117:
+
+	assignOperator : MINUSASSIGN .  (reduce by rule 87)
+
+
+
+	.	reduce by rule 87
+
+
+state 118:
+
+	assignOperator : PLUSASSIGN .  (reduce by rule 86)
+
+
+
+	.	reduce by rule 86
+
+
+state 119:
+
+	arrayAlloc : ARRAY LT . ty GT LPAREN exp RPAREN 
+
+	ID	shift 14
+	LBRACK	shift 13
+	FUN	shift 30
+
+	ty	goto 167
+
+	.	error
+
+
+state 120:
+
+	preDecExp : MINUSMINUS unaryExp .  (reduce by rule 114)
+
+
+
+	.	reduce by rule 114
+
+
+state 121:
+
+	primaryExp : lvalue .  (reduce by rule 129)
+
+
+
+	.	reduce by rule 129
+
+
+state 122:
+
+	preIncExp : PLUSPLUS unaryExp .  (reduce by rule 113)
+
+
+
+	.	reduce by rule 113
+
+
+state 123:
+
+	unaryExpNotPlusMinus : BANG unaryExp .  (reduce by rule 116)
+
+
+
+	.	reduce by rule 116
+
+
+state 124:
+
+	unaryExp : MINUS unaryExp .  (reduce by rule 112)
+
+
+
+	.	reduce by rule 112
+
+
+state 125:
+
+	unaryExp : PLUS unaryExp .  (reduce by rule 111)
+
+
+
+	.	reduce by rule 111
+
+
+state 126:
+
+	primaryExp : LPAREN exp . RPAREN 
+
+	RPAREN	shift 168
+
+
+	.	error
+
+
+state 127:
+
+	declList' : varDecl . COMMA declList' 
+	declList' : varDecl .  (reduce by rule 11)
+
+	COMMA	shift 169
+
+
+	.	reduce by rule 11
+
+
+state 128:
+
+	declList : declList' .  (reduce by rule 8)
+
+
+
+	.	reduce by rule 8
+
+
+state 129:
+
+	lambdaExp : LPAREN declList . RPAREN ARROW ty compoundStat 
+
+	RPAREN	shift 170
+
+
+	.	error
+
+
+state 130:
+
+	stat : jumpStat SEMICOLON .  (reduce by rule 50)
+
+
+
+	.	reduce by rule 50
+
+
+state 131:
+
+	compoundStat : LBRACE statList RBRACE .  (reduce by rule 53)
+
+
+
+	.	reduce by rule 53
+
+
+state 132:
+
+	stat : expStat SEMICOLON .  (reduce by rule 46)
+
+
+
+	.	reduce by rule 46
+
+
+state 133:
+
+	statList : stat statList .  (reduce by rule 54)
+
+
+
+	.	reduce by rule 54
+
+
+state 134:
+
+	stat : varDeclMaybeAssign SEMICOLON .  (reduce by rule 51)
+
+
+
+	.	reduce by rule 51
+
+
+state 135:
+
+	jumpStat : RETURN exp .  (reduce by rule 72)
+
+
+
+	.	reduce by rule 72
+
+
+state 136:
+
+	iterationStat : FOR LPAREN . SEMICOLON SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN . SEMICOLON SEMICOLON exp RPAREN stat 
+	iterationStat : FOR LPAREN . SEMICOLON exp SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN . SEMICOLON exp SEMICOLON exp RPAREN stat 
+	iterationStat : FOR LPAREN . varDeclMaybeAssign SEMICOLON SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN . varDeclMaybeAssign SEMICOLON SEMICOLON exp RPAREN stat 
+	iterationStat : FOR LPAREN . varDeclMaybeAssign SEMICOLON exp SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN . varDeclMaybeAssign SEMICOLON exp SEMICOLON exp RPAREN stat 
+	iterationStat : FOR LPAREN . exp SEMICOLON SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN . exp SEMICOLON SEMICOLON exp RPAREN stat 
+	iterationStat : FOR LPAREN . exp SEMICOLON exp SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN . exp SEMICOLON exp SEMICOLON exp RPAREN stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	SEMICOLON	shift 173
+	LPAREN	shift 63
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	FUN	shift 30
+	VAR	shift 9
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 172
+	ty	goto 1
+	exp	goto 171
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 137:
+
+	iterationStat : WHILE LPAREN . exp RPAREN stat 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 174
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 138:
+
+	selectionStat : IF LPAREN . exp RPAREN stat selectionStat' 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 175
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 139:
+
+	varDeclMaybeAssign : VAR ID ASSIGN exp .  (reduce by rule 36)
+
+
+
+	.	reduce by rule 36
+
+
+state 140:
+
+	ty : FUN LPAREN typeList RPAREN . ARROW ty 
+
+	ARROW	shift 176
+
+
+	.	error
+
+
+state 141:
+
+	typeList' : ty COMMA . typeList' 
+
+	ID	shift 14
+	LBRACK	shift 13
+	FUN	shift 30
+
+	ty	goto 88
+	typeList'	goto 177
+
+	.	error
+
+
+state 142:
+
+	functionHeader : FUN ID LPAREN declList . RPAREN ARROW ty 
+
+	RPAREN	shift 178
+
+
+	.	error
+
+
+state 143:
+
+	classDecl : CLASS ID classParent LBRACE . classBody RBRACE 
+
+	PRIVATE	shift 184
+	PUBLIC	shift 183
+	PROTECTED	shift 182
+
+	classBody	goto 181
+	classElement	goto 180
+	accessSpec	goto 179
+
+	.	reduce by rule 22
+
+
+state 144:
+
+	classParent : EXTENDS ID . COMMA IMPLEMENTS idList 
+	classParent : EXTENDS ID .  (reduce by rule 17)
+
+	COMMA	shift 185
+
+
+	.	reduce by rule 17
+
+
+state 145:
+
+	classParent : IMPLEMENTS idList . COMMA EXTENDS ID 
+	classParent : IMPLEMENTS idList .  (reduce by rule 16)
+	idList : idList . COMMA ID 
+
+	COMMA	shift 186
+
+
+	.	reduce by rule 16
+
+
+state 146:
+
+	idList : ID .  (reduce by rule 20)
+
+
+
+	.	reduce by rule 20
+
+
+state 147:
+
+	interfaceDecl : INTERFACE ID interfaceParent LBRACE . interfaceBody RBRACE 
+
+	PUBLIC	shift 189
+
+	interfaceBody	goto 188
+	interfaceElement	goto 187
+
+	.	reduce by rule 33
+
+
+state 148:
+
+	interfaceParent : EXTENDS ID .  (reduce by rule 30)
+
+
+
+	.	reduce by rule 30
+
+
+state 149:
+
+	fieldAccess : callOrConsExp DOT ID .  (reduce by rule 83)
+
+
+
+	.	reduce by rule 83
+
+
+state 150:
+
+	arrayAccess : callOrConsExp LBRACK exp . RBRACK 
+
+	RBRACK	shift 190
+
+
+	.	error
+
+
+state 151:
+
+	expList : expList' .  (reduce by rule 122)
+
+
+
+	.	reduce by rule 122
+
+
+state 152:
+
+	callOrConsExp : callOrConsExp LPAREN expList . RPAREN 
+
+	RPAREN	shift 191
+
+
+	.	error
+
+
+state 153:
+
+	expList' : exp . COMMA expList' 
+	expList' : exp .  (reduce by rule 125)
+
+	COMMA	shift 192
+
+
+	.	reduce by rule 125
+
+
+state 154:
+
+	mulExp : mulExp DIVIDE unaryExp .  (reduce by rule 107)
+
+
+
+	.	reduce by rule 107
+
+
+state 155:
+
+	mulExp : mulExp TIMES unaryExp .  (reduce by rule 106)
+
+
+
+	.	reduce by rule 106
+
+
+state 156:
+
+	addExp : addExp MINUS mulExp .  (reduce by rule 104)
+	mulExp : mulExp . TIMES unaryExp 
+	mulExp : mulExp . DIVIDE unaryExp 
+
+	TIMES	shift 102
+	DIVIDE	shift 101
+
+
+	.	reduce by rule 104
+
+
+state 157:
+
+	addExp : addExp PLUS mulExp .  (reduce by rule 103)
+	mulExp : mulExp . TIMES unaryExp 
+	mulExp : mulExp . DIVIDE unaryExp 
+
+	TIMES	shift 102
+	DIVIDE	shift 101
+
+
+	.	reduce by rule 103
+
+
+state 158:
+
+	relExp : relExp GE addExp .  (reduce by rule 100)
+	addExp : addExp . PLUS mulExp 
+	addExp : addExp . MINUS mulExp 
+
+	PLUS	shift 104
+	MINUS	shift 103
+
+
+	.	reduce by rule 100
+
+
+state 159:
+
+	relExp : relExp GT addExp .  (reduce by rule 98)
+	addExp : addExp . PLUS mulExp 
+	addExp : addExp . MINUS mulExp 
+
+	PLUS	shift 104
+	MINUS	shift 103
+
+
+	.	reduce by rule 98
+
+
+state 160:
+
+	relExp : relExp LE addExp .  (reduce by rule 101)
+	addExp : addExp . PLUS mulExp 
+	addExp : addExp . MINUS mulExp 
+
+	PLUS	shift 104
+	MINUS	shift 103
+
+
+	.	reduce by rule 101
+
+
+state 161:
+
+	relExp : relExp LT addExp .  (reduce by rule 99)
+	addExp : addExp . PLUS mulExp 
+	addExp : addExp . MINUS mulExp 
+
+	PLUS	shift 104
+	MINUS	shift 103
+
+
+	.	reduce by rule 99
+
+
+state 162:
+
+	eqExp : eqExp NEQ relExp .  (reduce by rule 96)
+	relExp : relExp . GT addExp 
+	relExp : relExp . LT addExp 
+	relExp : relExp . GE addExp 
+	relExp : relExp . LE addExp 
+
+	LT	shift 108
+	LE	shift 107
+	GT	shift 106
+	GE	shift 105
+
+
+	.	reduce by rule 96
+
+
+state 163:
+
+	eqExp : eqExp EQ relExp .  (reduce by rule 95)
+	relExp : relExp . GT addExp 
+	relExp : relExp . LT addExp 
+	relExp : relExp . GE addExp 
+	relExp : relExp . LE addExp 
+
+	LT	shift 108
+	LE	shift 107
+	GT	shift 106
+	GE	shift 105
+
+
+	.	reduce by rule 95
+
+
+state 164:
+
+	andExp : andExp AND eqExp .  (reduce by rule 93)
+	eqExp : eqExp . EQ relExp 
+	eqExp : eqExp . NEQ relExp 
+
+	EQ	shift 110
+	NEQ	shift 109
+
+
+	.	reduce by rule 93
+
+
+state 165:
+
+	orExp : orExp OR andExp .  (reduce by rule 91)
+	andExp : andExp . AND eqExp 
+
+	AND	shift 111
+
+
+	.	reduce by rule 91
+
+
+state 166:
+
+	assignment : lvalue assignOperator exp .  (reduce by rule 79)
+
+
+
+	.	reduce by rule 79
+
+
+state 167:
+
+	arrayAlloc : ARRAY LT ty . GT LPAREN exp RPAREN 
+
+	GT	shift 193
+
+
+	.	error
+
+
+state 168:
+
+	primaryExp : LPAREN exp RPAREN .  (reduce by rule 132)
+
+
+
+	.	reduce by rule 132
+
+
+state 169:
+
+	declList' : varDecl COMMA . declList' 
+
+	ID	shift 14
+	LBRACK	shift 13
+	FUN	shift 30
+
+	declList'	goto 194
+	varDecl	goto 127
+	ty	goto 1
+
+	.	error
+
+
+state 170:
+
+	lambdaExp : LPAREN declList RPAREN . ARROW ty compoundStat 
+
+	ARROW	shift 195
+
+
+	.	error
+
+
+state 171:
+
+	iterationStat : FOR LPAREN exp . SEMICOLON SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN exp . SEMICOLON SEMICOLON exp RPAREN stat 
+	iterationStat : FOR LPAREN exp . SEMICOLON exp SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN exp . SEMICOLON exp SEMICOLON exp RPAREN stat 
+
+	SEMICOLON	shift 196
+
+
+	.	error
+
+
+state 172:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign . SEMICOLON SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN varDeclMaybeAssign . SEMICOLON SEMICOLON exp RPAREN stat 
+	iterationStat : FOR LPAREN varDeclMaybeAssign . SEMICOLON exp SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN varDeclMaybeAssign . SEMICOLON exp SEMICOLON exp RPAREN stat 
+
+	SEMICOLON	shift 197
+
+
+	.	error
+
+
+state 173:
+
+	iterationStat : FOR LPAREN SEMICOLON . SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN SEMICOLON . SEMICOLON exp RPAREN stat 
+	iterationStat : FOR LPAREN SEMICOLON . exp SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN SEMICOLON . exp SEMICOLON exp RPAREN stat 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	SEMICOLON	shift 199
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 198
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 174:
+
+	iterationStat : WHILE LPAREN exp . RPAREN stat 
+
+	RPAREN	shift 200
+
+
+	.	error
+
+
+state 175:
+
+	selectionStat : IF LPAREN exp . RPAREN stat selectionStat' 
+
+	RPAREN	shift 201
+
+
+	.	error
+
+
+state 176:
+
+	ty : FUN LPAREN typeList RPAREN ARROW . ty 
+
+	ID	shift 14
+	LBRACK	shift 13
+	FUN	shift 30
+
+	ty	goto 202
+
+	.	error
+
+
+state 177:
+
+	typeList' : ty COMMA typeList' .  (reduce by rule 44)
+
+
+
+	.	reduce by rule 44
+
+
+state 178:
+
+	functionHeader : FUN ID LPAREN declList RPAREN . ARROW ty 
+
+	ARROW	shift 203
+
+
+	.	error
+
+
+state 179:
+
+	classElement : accessSpec . varDecl SEMICOLON 
+	classElement : accessSpec . functionDecl 
+	classElement : accessSpec . ID LPAREN declList RPAREN compoundStat 
+
+	ID	shift 206
+	LBRACK	shift 13
+	FUN	shift 10
+
+	functionDecl	goto 205
+	functionHeader	goto 6
+	varDecl	goto 204
+	ty	goto 1
+
+	.	error
+
+
+state 180:
+
+	classBody : classElement . classBody 
+
+	PRIVATE	shift 184
+	PUBLIC	shift 183
+	PROTECTED	shift 182
+
+	classBody	goto 207
+	classElement	goto 180
+	accessSpec	goto 179
+
+	.	reduce by rule 22
+
+
+state 181:
+
+	classDecl : CLASS ID classParent LBRACE classBody . RBRACE 
+
+	RBRACE	shift 208
+
+
+	.	error
+
+
+state 182:
+
+	accessSpec : PROTECTED .  (reduce by rule 27)
+
+
+
+	.	reduce by rule 27
+
+
+state 183:
+
+	accessSpec : PUBLIC .  (reduce by rule 28)
+
+
+
+	.	reduce by rule 28
+
+
+state 184:
+
+	accessSpec : PRIVATE .  (reduce by rule 26)
+
+
+
+	.	reduce by rule 26
+
+
+state 185:
+
+	classParent : EXTENDS ID COMMA . IMPLEMENTS idList 
+
+	IMPLEMENTS	shift 209
+
+
+	.	error
+
+
+state 186:
+
+	classParent : IMPLEMENTS idList COMMA . EXTENDS ID 
+	idList : idList COMMA . ID 
+
+	ID	shift 211
+	EXTENDS	shift 210
+
+
+	.	error
+
+
+state 187:
+
+	interfaceBody : interfaceElement . SEMICOLON interfaceBody 
+
+	SEMICOLON	shift 212
+
+
+	.	error
+
+
+state 188:
+
+	interfaceDecl : INTERFACE ID interfaceParent LBRACE interfaceBody . RBRACE 
+
+	RBRACE	shift 213
+
+
+	.	error
+
+
+state 189:
+
+	interfaceElement : PUBLIC . functionHeader 
+
+	FUN	shift 215
+
+	functionHeader	goto 214
+
+	.	error
+
+
+state 190:
+
+	arrayAccess : callOrConsExp LBRACK exp RBRACK .  (reduce by rule 84)
+
+
+
+	.	reduce by rule 84
+
+
+state 191:
+
+	callOrConsExp : callOrConsExp LPAREN expList RPAREN .  (reduce by rule 121)
+
+
+
+	.	reduce by rule 121
+
+
+state 192:
+
+	expList' : exp COMMA . expList' 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 153
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	expList'	goto 216
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 193:
+
+	arrayAlloc : ARRAY LT ty GT . LPAREN exp RPAREN 
+
+	LPAREN	shift 217
+
+
+	.	error
+
+
+state 194:
+
+	declList' : varDecl COMMA declList' .  (reduce by rule 10)
+
+
+
+	.	reduce by rule 10
+
+
+state 195:
+
+	lambdaExp : LPAREN declList RPAREN ARROW . ty compoundStat 
+
+	ID	shift 14
+	LBRACK	shift 13
+	FUN	shift 30
+
+	ty	goto 218
+
+	.	error
+
+
+state 196:
+
+	iterationStat : FOR LPAREN exp SEMICOLON . SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN exp SEMICOLON . SEMICOLON exp RPAREN stat 
+	iterationStat : FOR LPAREN exp SEMICOLON . exp SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN exp SEMICOLON . exp SEMICOLON exp RPAREN stat 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	SEMICOLON	shift 220
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 219
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 197:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON . SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON . SEMICOLON exp RPAREN stat 
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON . exp SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON . exp SEMICOLON exp RPAREN stat 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	SEMICOLON	shift 222
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 221
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 198:
+
+	iterationStat : FOR LPAREN SEMICOLON exp . SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN SEMICOLON exp . SEMICOLON exp RPAREN stat 
+
+	SEMICOLON	shift 223
+
+
+	.	error
+
+
+state 199:
+
+	iterationStat : FOR LPAREN SEMICOLON SEMICOLON . RPAREN stat 
+	iterationStat : FOR LPAREN SEMICOLON SEMICOLON . exp RPAREN stat 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	RPAREN	shift 225
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 224
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 200:
+
+	iterationStat : WHILE LPAREN exp RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 226
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 201:
+
+	selectionStat : IF LPAREN exp RPAREN . stat selectionStat' 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 227
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 202:
+
+	ty : FUN LPAREN typeList RPAREN ARROW ty .  (reduce by rule 41)
+
+
+
+	.	reduce by rule 41
+
+
+state 203:
+
+	functionHeader : FUN ID LPAREN declList RPAREN ARROW . ty 
+
+	ID	shift 14
+	LBRACK	shift 13
+	FUN	shift 30
+
+	ty	goto 228
+
+	.	error
+
+
+state 204:
+
+	classElement : accessSpec varDecl . SEMICOLON 
+
+	SEMICOLON	shift 229
+
+
+	.	error
+
+
+state 205:
+
+	classElement : accessSpec functionDecl .  (reduce by rule 24)
+
+
+
+	.	reduce by rule 24
+
+
+state 206:
+
+	classElement : accessSpec ID . LPAREN declList RPAREN compoundStat 
+	ty : ID .  (reduce by rule 40)
+
+	LPAREN	shift 230
+
+
+	.	reduce by rule 40
+
+
+state 207:
+
+	classBody : classElement classBody .  (reduce by rule 21)
+
+
+
+	.	reduce by rule 21
+
+
+state 208:
+
+	classDecl : CLASS ID classParent LBRACE classBody RBRACE .  (reduce by rule 13)
+
+
+
+	.	reduce by rule 13
+
+
+state 209:
+
+	classParent : EXTENDS ID COMMA IMPLEMENTS . idList 
+
+	ID	shift 146
+
+	idList	goto 231
+
+	.	error
+
+
+state 210:
+
+	classParent : IMPLEMENTS idList COMMA EXTENDS . ID 
+
+	ID	shift 232
+
+
+	.	error
+
+
+state 211:
+
+	idList : idList COMMA ID .  (reduce by rule 19)
+
+
+
+	.	reduce by rule 19
+
+
+state 212:
+
+	interfaceBody : interfaceElement SEMICOLON . interfaceBody 
+
+	PUBLIC	shift 189
+
+	interfaceBody	goto 233
+	interfaceElement	goto 187
+
+	.	reduce by rule 33
+
+
+state 213:
+
+	interfaceDecl : INTERFACE ID interfaceParent LBRACE interfaceBody RBRACE .  (reduce by rule 29)
+
+
+
+	.	reduce by rule 29
+
+
+state 214:
+
+	interfaceElement : PUBLIC functionHeader .  (reduce by rule 34)
+
+
+
+	.	reduce by rule 34
+
+
+state 215:
+
+	functionHeader : FUN . ID LPAREN declList RPAREN ARROW ty 
+
+	ID	shift 26
+
+
+	.	error
+
+
+state 216:
+
+	expList' : exp COMMA expList' .  (reduce by rule 124)
+
+
+
+	.	reduce by rule 124
+
+
+state 217:
+
+	arrayAlloc : ARRAY LT ty GT LPAREN . exp RPAREN 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 234
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 218:
+
+	lambdaExp : LPAREN declList RPAREN ARROW ty . compoundStat 
+
+	LBRACE	shift 22
+
+	compoundStat	goto 235
+
+	.	error
+
+
+state 219:
+
+	iterationStat : FOR LPAREN exp SEMICOLON exp . SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN exp SEMICOLON exp . SEMICOLON exp RPAREN stat 
+
+	SEMICOLON	shift 236
+
+
+	.	error
+
+
+state 220:
+
+	iterationStat : FOR LPAREN exp SEMICOLON SEMICOLON . RPAREN stat 
+	iterationStat : FOR LPAREN exp SEMICOLON SEMICOLON . exp RPAREN stat 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	RPAREN	shift 238
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 237
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 221:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON exp . SEMICOLON RPAREN stat 
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON exp . SEMICOLON exp RPAREN stat 
+
+	SEMICOLON	shift 239
+
+
+	.	error
+
+
+state 222:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON SEMICOLON . RPAREN stat 
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON SEMICOLON . exp RPAREN stat 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	RPAREN	shift 241
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 240
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 223:
+
+	iterationStat : FOR LPAREN SEMICOLON exp SEMICOLON . RPAREN stat 
+	iterationStat : FOR LPAREN SEMICOLON exp SEMICOLON . exp RPAREN stat 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	RPAREN	shift 243
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 242
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 224:
+
+	iterationStat : FOR LPAREN SEMICOLON SEMICOLON exp . RPAREN stat 
+
+	RPAREN	shift 244
+
+
+	.	error
+
+
+state 225:
+
+	iterationStat : FOR LPAREN SEMICOLON SEMICOLON RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 245
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 226:
+
+	iterationStat : WHILE LPAREN exp RPAREN stat .  (reduce by rule 59)
+
+
+
+	.	reduce by rule 59
+
+error:  state 227: shift/reduce conflict (shift ELSE, reduce by rule 58)
+
+state 227:
+
+	selectionStat : IF LPAREN exp RPAREN stat . selectionStat' 
+
+	ELSE	shift 247
+
+	selectionStat'	goto 246
+
+	.	reduce by rule 58
+
+
+state 228:
+
+	functionHeader : FUN ID LPAREN declList RPAREN ARROW ty .  (reduce by rule 7)
+
+
+
+	.	reduce by rule 7
+
+
+state 229:
+
+	classElement : accessSpec varDecl SEMICOLON .  (reduce by rule 23)
+
+
+
+	.	reduce by rule 23
+
+
+state 230:
+
+	classElement : accessSpec ID LPAREN . declList RPAREN compoundStat 
+
+	ID	shift 14
+	LBRACK	shift 13
+	FUN	shift 30
+
+	declList	goto 248
+	declList'	goto 128
+	varDecl	goto 127
+	ty	goto 1
+
+	.	reduce by rule 9
+
+
+state 231:
+
+	classParent : EXTENDS ID COMMA IMPLEMENTS idList .  (reduce by rule 15)
+	idList : idList . COMMA ID 
+
+	COMMA	shift 249
+
+
+	.	reduce by rule 15
+
+
+state 232:
+
+	classParent : IMPLEMENTS idList COMMA EXTENDS ID .  (reduce by rule 14)
+
+
+
+	.	reduce by rule 14
+
+
+state 233:
+
+	interfaceBody : interfaceElement SEMICOLON interfaceBody .  (reduce by rule 32)
+
+
+
+	.	reduce by rule 32
+
+
+state 234:
+
+	arrayAlloc : ARRAY LT ty GT LPAREN exp . RPAREN 
+
+	RPAREN	shift 250
+
+
+	.	error
+
+
+state 235:
+
+	lambdaExp : LPAREN declList RPAREN ARROW ty compoundStat .  (reduce by rule 76)
+
+
+
+	.	reduce by rule 76
+
+
+state 236:
+
+	iterationStat : FOR LPAREN exp SEMICOLON exp SEMICOLON . RPAREN stat 
+	iterationStat : FOR LPAREN exp SEMICOLON exp SEMICOLON . exp RPAREN stat 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	RPAREN	shift 252
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 251
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 237:
+
+	iterationStat : FOR LPAREN exp SEMICOLON SEMICOLON exp . RPAREN stat 
+
+	RPAREN	shift 253
+
+
+	.	error
+
+
+state 238:
+
+	iterationStat : FOR LPAREN exp SEMICOLON SEMICOLON RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 254
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 239:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON exp SEMICOLON . RPAREN stat 
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON exp SEMICOLON . exp RPAREN stat 
+
+	ID	shift 69
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	RPAREN	shift 256
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	ARRAY	shift 56
+
+	exp	goto 255
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 240:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON SEMICOLON exp . RPAREN stat 
+
+	RPAREN	shift 257
+
+
+	.	error
+
+
+state 241:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON SEMICOLON RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 258
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 242:
+
+	iterationStat : FOR LPAREN SEMICOLON exp SEMICOLON exp . RPAREN stat 
+
+	RPAREN	shift 259
+
+
+	.	error
+
+
+state 243:
+
+	iterationStat : FOR LPAREN SEMICOLON exp SEMICOLON RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 260
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 244:
+
+	iterationStat : FOR LPAREN SEMICOLON SEMICOLON exp RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 261
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 245:
+
+	iterationStat : FOR LPAREN SEMICOLON SEMICOLON RPAREN stat .  (reduce by rule 60)
+
+
+
+	.	reduce by rule 60
+
+
+state 246:
+
+	selectionStat : IF LPAREN exp RPAREN stat selectionStat' .  (reduce by rule 56)
+
+
+
+	.	reduce by rule 56
+
+
+state 247:
+
+	selectionStat' : ELSE . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 262
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 248:
+
+	classElement : accessSpec ID LPAREN declList . RPAREN compoundStat 
+
+	RPAREN	shift 263
+
+
+	.	error
+
+
+state 249:
+
+	idList : idList COMMA . ID 
+
+	ID	shift 211
+
+
+	.	error
+
+
+state 250:
+
+	arrayAlloc : ARRAY LT ty GT LPAREN exp RPAREN .  (reduce by rule 126)
+
+
+
+	.	reduce by rule 126
+
+
+state 251:
+
+	iterationStat : FOR LPAREN exp SEMICOLON exp SEMICOLON exp . RPAREN stat 
+
+	RPAREN	shift 264
+
+
+	.	error
+
+
+state 252:
+
+	iterationStat : FOR LPAREN exp SEMICOLON exp SEMICOLON RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 265
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 253:
+
+	iterationStat : FOR LPAREN exp SEMICOLON SEMICOLON exp RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 266
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 254:
+
+	iterationStat : FOR LPAREN exp SEMICOLON SEMICOLON RPAREN stat .  (reduce by rule 68)
+
+
+
+	.	reduce by rule 68
+
+
+state 255:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON exp SEMICOLON exp . RPAREN stat 
+
+	RPAREN	shift 267
+
+
+	.	error
+
+
+state 256:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON exp SEMICOLON RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 268
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 257:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON SEMICOLON exp RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 269
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 258:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON SEMICOLON RPAREN stat .  (reduce by rule 64)
+
+
+
+	.	reduce by rule 64
+
+
+state 259:
+
+	iterationStat : FOR LPAREN SEMICOLON exp SEMICOLON exp RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 270
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 260:
+
+	iterationStat : FOR LPAREN SEMICOLON exp SEMICOLON RPAREN stat .  (reduce by rule 62)
+
+
+
+	.	reduce by rule 62
+
+
+state 261:
+
+	iterationStat : FOR LPAREN SEMICOLON SEMICOLON exp RPAREN stat .  (reduce by rule 61)
+
+
+
+	.	reduce by rule 61
+
+
+state 262:
+
+	selectionStat' : ELSE stat .  (reduce by rule 57)
+
+
+
+	.	reduce by rule 57
+
+
+state 263:
+
+	classElement : accessSpec ID LPAREN declList RPAREN . compoundStat 
+
+	LBRACE	shift 22
+
+	compoundStat	goto 271
+
+	.	error
+
+
+state 264:
+
+	iterationStat : FOR LPAREN exp SEMICOLON exp SEMICOLON exp RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 272
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 265:
+
+	iterationStat : FOR LPAREN exp SEMICOLON exp SEMICOLON RPAREN stat .  (reduce by rule 70)
+
+
+
+	.	reduce by rule 70
+
+
+state 266:
+
+	iterationStat : FOR LPAREN exp SEMICOLON SEMICOLON exp RPAREN stat .  (reduce by rule 69)
+
+
+
+	.	reduce by rule 69
+
+
+state 267:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON exp SEMICOLON exp RPAREN . stat 
+
+	ID	shift 84
+	INT	shift 68
+	STRING	shift 67
+	CHAR	shift 66
+	FLOAT	shift 65
+	BOOL	shift 64
+	LPAREN	shift 63
+	LBRACE	shift 22
+	LBRACK	shift 13
+	PLUS	shift 62
+	MINUS	shift 61
+	BANG	shift 60
+	PLUSPLUS	shift 59
+	MINUSMINUS	shift 58
+	THIS	shift 57
+	IF	shift 83
+	WHILE	shift 82
+	FOR	shift 81
+	FUN	shift 30
+	VAR	shift 9
+	BREAK	shift 80
+	RETURN	shift 79
+	ARRAY	shift 56
+
+	varDecl	goto 5
+	varDeclMaybeAssign	goto 78
+	ty	goto 1
+	stat	goto 273
+	expStat	goto 76
+	compoundStat	goto 75
+	selectionStat	goto 73
+	iterationStat	goto 72
+	jumpStat	goto 71
+	exp	goto 70
+	lambdaExp	goto 54
+	assignmentExp	goto 53
+	assignment	goto 52
+	lvalue	goto 51
+	arrayAlloc	goto 50
+	fieldAccess	goto 49
+	arrayAccess	goto 48
+	orExp	goto 47
+	andExp	goto 46
+	eqExp	goto 45
+	relExp	goto 44
+	addExp	goto 43
+	mulExp	goto 42
+	unaryExp	goto 41
+	preIncExp	goto 40
+	preDecExp	goto 39
+	unaryExpNotPlusMinus	goto 38
+	postfixExp	goto 37
+	callOrConsExp	goto 36
+	primaryExp	goto 35
+	literalExp	goto 34
+	postIncExp	goto 33
+	postDecExp	goto 32
+
+	.	error
+
+
+state 268:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON exp SEMICOLON RPAREN stat .  (reduce by rule 66)
+
+
+
+	.	reduce by rule 66
+
+
+state 269:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON SEMICOLON exp RPAREN stat .  (reduce by rule 65)
+
+
+
+	.	reduce by rule 65
+
+
+state 270:
+
+	iterationStat : FOR LPAREN SEMICOLON exp SEMICOLON exp RPAREN stat .  (reduce by rule 63)
+
+
+
+	.	reduce by rule 63
+
+
+state 271:
+
+	classElement : accessSpec ID LPAREN declList RPAREN compoundStat .  (reduce by rule 25)
+
+
+
+	.	reduce by rule 25
+
+
+state 272:
+
+	iterationStat : FOR LPAREN exp SEMICOLON exp SEMICOLON exp RPAREN stat .  (reduce by rule 71)
+
+
+
+	.	reduce by rule 71
+
+
+state 273:
+
+	iterationStat : FOR LPAREN varDeclMaybeAssign SEMICOLON exp SEMICOLON exp RPAREN stat .  (reduce by rule 67)
+
+
+
+	.	reduce by rule 67
+
+
+state 274:
+
+
+	EOF	accept
+
+
+	.	error
+
+425 of 1433 action table entries left after compaction
+1444 goto table entries

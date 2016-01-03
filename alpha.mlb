@@ -1,0 +1,56 @@
+$(SML_LIB)/basis/basis.mlb
+$(SML_LIB)/basis/mlton.mlb
+$(SML_LIB)/basis/libs/all.mlb
+$(SML_LIB)/mlyacc-lib/mlyacc-lib.mlb
+$(SML_LIB)/smlnj-lib/Util/smlnj-lib.mlb
+
+Parsing/alpha.grm.sig
+util/table.sig
+util/table.sml
+util/symbol.sml
+util/errormsg.sml
+Parsing/absyn.sml
+ann "nonexhaustiveMatch ignore" in
+Parsing/alpha.grm.sml
+end
+Lexical/alpha.lex.sml
+Parsing/parse.sml
+util/prabsyn.sml
+Semantic/types.sig
+Semantic/types.sml
+util/prtypes.sig
+util/prtypes.sml
+util/probs.sig
+util/probs.sml
+IRTranslation/temp.sig
+IRTranslation/temp.sml
+util/graph.sig
+util/graph.sml
+IRTranslation/tree.sig
+IRTranslation/tree.sml
+CodeGeneration/assem.sml
+IRTranslation/frame.sig
+IRTranslation/x86frame.sml
+util/prtree.sml
+IRTranslation/translate.sml
+Semantic/env.sig
+Semantic/env.sml
+Semantic/semant.sml
+ann "nonexhaustiveMatch ignore" in
+	CodeGeneration/canon.sml
+end
+CodeGeneration/x86gen.sml
+CodeGeneration/Liveness/flowgraph.sml
+CodeGeneration/Liveness/makegraph.sml
+ann "nonexhaustiveMatch ignore" in
+	CodeGeneration/Liveness/Liveness.sml
+end
+CodeGeneration/RegisterAllocation/worklists.sig
+CodeGeneration/RegisterAllocation/worklists.sml
+CodeGeneration/RegisterAllocation/color.sig
+CodeGeneration/RegisterAllocation/color.sml
+ann "nonexhaustiveMatch ignore" in
+	CodeGeneration/RegisterAllocation/regalloc.sig
+	CodeGeneration/RegisterAllocation/regalloc.sml
+end
+main.sml

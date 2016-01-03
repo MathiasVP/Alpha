@@ -1,0 +1,420 @@
+structure A = Absyn
+structure S = Symbol
+
+%%
+
+%term
+	EOF
+  | ID of string
+  | INT of int
+  | STRING of string
+  | CHAR of string
+  | FLOAT of real
+  | BOOL of bool
+  | COMMA | SEMICOLON | LPAREN | RPAREN | LBRACE | RBRACE | LBRACK | RBRACK
+  | PLUS | MINUS | BANG | UNARY | TIMES | DIVIDE | EQ | NEQ | LT | LE | GT | GE
+  | PLUSPLUS | MINUSMINUS | PLUSASSIGN | MINUSASSIGN | TIMESASSIGN | DIVIDEASSIGN
+  | AND | OR | ASSIGN
+  | INTERFACE | CLASS | IMPLEMENTS | EXTENDS | PRIVATE | PUBLIC | PROTECTED | THIS
+  | IF | ELSE | WHILE | FOR | FUN | VAR | VOID | ARROW | BREAK | RETURN | DOT | ARRAY
+  
+%nonterm
+	program of A.decl list
+  | declarations of A.decl list
+  | functionDecl of A.decl
+  | functionHeader of {name: S.symbol, formals: A.decl list, returnTy: A.ty, pos: pos}
+  | declList of A.decl list
+  | declList' of A.decl list
+  | varDecl of {var: S.symbol, ty: A.ty option, exp: A.exp option, pos: pos}
+  | classDecl of A.decl
+  | classParent of {implements: S.symbol list, extends: S.symbol option}
+  | idList of S.symbol list
+  | classBody of (A.encapsulation * A.decl) list
+  | classElement of A.encapsulation * A.decl
+  | accessSpec of A.encapsulation
+  | interfaceDecl of A.decl
+  | interfaceParent of S.symbol option
+  | interfaceBody of {name: S.symbol, formals: A.decl list, returnTy: A.ty, pos: pos} list
+  | interfaceElement of {name: S.symbol, formals: A.decl list, returnTy: A.ty, pos: pos}
+  | varDeclMaybeAssign of {var: S.symbol, ty: A.ty option, exp: A.exp option, pos: pos}
+  | varDeclMaybeAssign' of A.exp option
+  | ty of A.ty
+  | typeList of A.ty list
+  | typeList' of A.ty list
+  | stat of A.stat
+  | expStat of A.stat
+  | compoundStat of A.stat
+  | statList of A.stat list
+  | selectionStat of A.stat
+  | selectionStat' of A.stat option
+  | iterationStat of A.stat
+  | jumpStat of A.stat
+  | exp of A.exp
+  | lambdaExp of A.exp
+  | assignmentExp of A.exp
+  | assignment of A.exp
+  | lvalue of A.var
+  | arrayAlloc of A.exp
+  | fieldAccess of A.var
+  | arrayAccess of A.var
+  | assignOperator of (A.var * A.exp * pos) -> A.exp
+  | orExp of A.exp
+  | andExp of A.exp
+  | eqExp of A.exp
+  | relExp of A.exp
+  | addExp of A.exp
+  | mulExp of A.exp
+  | unaryExp of A.exp
+  | preIncExp of A.exp
+  | preDecExp of A.exp
+  | unaryExpNotPlusMinus of A.exp
+  | postfixExp of A.exp
+  | callOrConsExp of A.exp
+  | expList of A.exp list
+  | expList' of A.exp list
+  | primaryExp of A.exp
+  | literalExp of A.exp
+  | postIncExp of A.exp
+  | postDecExp of A.exp
+
+%pos int
+%verbose
+%start program
+%eop EOF
+%noshift EOF
+
+%name Alpha
+
+%keyword
+	WHILE FOR FUN VAR IF ELSE
+	RETURN CLASS INTERFACE
+	PUBLIC PROTECTED PRIVATE
+	IMPLEMENTS EXTENDS
+
+%prefer ELSE LPAREN
+
+%value ID ("bogus")
+%value BOOL (true)
+%value INT (1)
+%value STRING ("")
+%value FLOAT (3.14)
+
+%%
+
+program
+	: declarations																(declarations)
+
+declarations
+	: functionDecl declarations													(functionDecl :: declarations)
+	| classDecl declarations													(classDecl :: declarations)
+	| interfaceDecl declarations												(interfaceDecl :: declarations)
+	| varDeclMaybeAssign SEMICOLON declarations									(A.VarDecl varDeclMaybeAssign :: declarations)
+	|																			([])
+
+
+functionDecl
+	: functionHeader compoundStat												(A.FunctionDecl { name = #name functionHeader,
+																								  formals = #formals functionHeader,
+																								  returnTy = SOME (#returnTy functionHeader),
+																								  body = compoundStat,
+																								  pos = #pos functionHeader
+																								}
+																				)
+	
+functionHeader
+	: FUN ID LPAREN declList RPAREN ARROW ty									({name = S.symbol ID, formals = declList, returnTy = ty, pos = FUNleft})
+	
+declList
+	: declList'																	(declList')
+	|																			([])
+	
+declList'
+	: varDecl COMMA declList'													(A.VarDecl varDecl :: declList')
+	| varDecl																	([A.VarDecl varDecl])
+	
+varDecl
+	: ty ID																		({var = S.symbol ID, ty = SOME ty, exp = NONE, pos = tyleft})
+	
+
+	
+classDecl
+	: CLASS ID classParent LBRACE classBody RBRACE								(A.ClassDecl { name = S.symbol ID,
+																							   extends = #extends classParent,
+																							   implements = #implements classParent,
+																							   body = classBody,
+																							   pos = CLASSleft
+																							 }
+																				)
+	
+classParent
+	: IMPLEMENTS idList COMMA EXTENDS ID										({implements = idList, extends = SOME (S.symbol ID)})
+	| EXTENDS ID COMMA IMPLEMENTS idList										({implements = idList, extends = SOME (S.symbol ID)})
+	| IMPLEMENTS idList															({implements = idList, extends = NONE})
+	| EXTENDS ID																({implements = [], extends = SOME (S.symbol ID)})
+	|																			({implements = [], extends = NONE})
+
+idList
+	: idList COMMA ID															(idList @ [S.symbol ID])
+	| ID																		([S.symbol ID])
+	
+classBody
+	: classElement classBody													(classElement :: classBody)
+	|																			([])
+	
+classElement
+	: accessSpec varDecl SEMICOLON												((accessSpec, A.VarDecl varDecl))
+	| accessSpec functionDecl													((accessSpec, functionDecl))
+	| accessSpec ID LPAREN declList RPAREN compoundStat							((accessSpec, A.FunctionDecl { name = S.symbol ID,
+																											   formals = declList,
+																											   returnTy = NONE,
+																											   body = compoundStat,
+																											   pos = accessSpecleft}))
+	
+accessSpec
+	: PRIVATE																	(A.PRIVATE)
+	| PROTECTED																	(A.PROTECTED)
+	| PUBLIC																	(A.PUBLIC)
+	
+
+
+interfaceDecl
+	: INTERFACE ID interfaceParent LBRACE interfaceBody RBRACE					(A.InterfaceDecl { name = S.symbol ID,
+																								   extends = interfaceParent,
+																								   body = interfaceBody,
+																								   pos = INTERFACEleft
+																								 }
+																				)
+	
+interfaceParent
+	: EXTENDS ID																(SOME (S.symbol ID))
+	|																			(NONE)
+	
+interfaceBody
+	: interfaceElement SEMICOLON interfaceBody									(interfaceElement :: interfaceBody)
+	|																			([])
+	
+interfaceElement
+	: PUBLIC functionHeader														({ name = #name functionHeader,
+																				   formals = #formals functionHeader,
+																				   returnTy = #returnTy functionHeader,
+																				   pos = PUBLICleft
+																				})
+
+
+
+varDeclMaybeAssign
+	: varDecl varDeclMaybeAssign'												({var = #var varDecl, ty = #ty varDecl, exp = varDeclMaybeAssign', pos = #pos varDecl})
+	| VAR ID ASSIGN exp															({var = S.symbol ID, ty = NONE, exp = SOME exp, pos = VARleft})
+
+varDeclMaybeAssign'
+	: ASSIGN exp																(SOME exp)
+	|																			(NONE)
+
+
+
+ty
+	: LBRACK ty RBRACK															(A.ArrayTy ty)
+	| ID																		(A.NameTy (S.symbol ID, IDleft))
+	| FUN LPAREN typeList RPAREN ARROW ty										(A.FunTy {formalTys = typeList, returnTy = ty, pos = FUNleft})
+
+typeList
+	: typeList'																	(typeList')
+	|																			([])
+
+typeList'
+	: ty COMMA typeList'														((ty :: typeList'))
+	| ty																		([ty])
+
+
+
+stat
+	: expStat SEMICOLON															(expStat)
+	| compoundStat																(compoundStat)
+	| selectionStat																(selectionStat)
+	| iterationStat																(iterationStat)
+	| jumpStat SEMICOLON														(jumpStat)
+	| varDeclMaybeAssign SEMICOLON												(A.VarDeclStat varDeclMaybeAssign)
+	
+expStat
+	: exp																		(A.ExpStat (SOME exp))
+	
+compoundStat
+	: LBRACE statList RBRACE													(A.CompoundStat statList)
+	
+statList
+	: stat statList																(stat :: statList)
+	|																			([])
+	
+selectionStat
+	: IF LPAREN exp RPAREN stat selectionStat'									(A.SelectionStat {test = exp, ifBody = stat, elseBody = selectionStat', pos = IFleft})
+	
+selectionStat'
+	: ELSE stat																	(SOME stat)
+	|																			(NONE)
+	
+iterationStat
+	: WHILE LPAREN exp RPAREN stat
+		(A.IterationStat {init = NONE, test = SOME exp, incr = NONE, body = stat, pos = WHILEleft})
+	| FOR LPAREN SEMICOLON SEMICOLON RPAREN stat
+		(A.IterationStat {init = NONE, test = NONE, incr = NONE, body = stat, pos = FORleft})
+	| FOR LPAREN SEMICOLON SEMICOLON exp RPAREN stat
+		(A.IterationStat {init = NONE, test = NONE, incr = SOME exp, body = stat, pos = FORleft})
+	| FOR LPAREN SEMICOLON exp SEMICOLON RPAREN stat
+		(A.IterationStat {init = NONE, test = SOME exp, incr = NONE, body = stat, pos = FORleft})
+	| FOR LPAREN SEMICOLON exp SEMICOLON exp RPAREN stat
+		(A.IterationStat {init = NONE, test = SOME exp1, incr = SOME exp2, body = stat, pos = FORleft})
+	| FOR LPAREN varDeclMaybeAssign SEMICOLON SEMICOLON RPAREN stat
+		(A.IterationStat {init = SOME (A.Decl varDeclMaybeAssign), test = NONE, incr = NONE, body = stat, pos = FORleft})
+	| FOR LPAREN varDeclMaybeAssign SEMICOLON SEMICOLON exp RPAREN stat
+		(A.IterationStat {init = SOME (A.Decl varDeclMaybeAssign), test = NONE, incr = SOME exp, body = stat, pos = FORleft})
+	| FOR LPAREN varDeclMaybeAssign SEMICOLON exp SEMICOLON RPAREN stat
+		(A.IterationStat {init = SOME (A.Decl varDeclMaybeAssign), test = SOME exp, incr = NONE, body = stat, pos = FORleft})
+	| FOR LPAREN varDeclMaybeAssign SEMICOLON exp SEMICOLON exp RPAREN stat
+		(A.IterationStat {init = SOME (A.Decl varDeclMaybeAssign), test = SOME exp1, incr = SOME exp2, body = stat, pos = FORleft})
+	| FOR LPAREN exp SEMICOLON SEMICOLON RPAREN stat
+		(A.IterationStat {init = SOME (A.Exp exp), test = NONE, incr = NONE, body = stat, pos = FORleft})
+	| FOR LPAREN exp SEMICOLON SEMICOLON exp RPAREN stat
+		(A.IterationStat {init = SOME (A.Exp exp1), test = NONE, incr = SOME exp2, body = stat, pos = FORleft})
+	| FOR LPAREN exp SEMICOLON exp SEMICOLON RPAREN stat
+		(A.IterationStat {init = SOME (A.Exp exp1), test = SOME exp2, incr = NONE, body = stat, pos = FORleft})
+	| FOR LPAREN exp SEMICOLON exp SEMICOLON exp RPAREN stat
+		(A.IterationStat {init = SOME (A.Exp exp1), test = SOME exp2, incr = SOME exp3, body = stat, pos = FORleft})
+	
+jumpStat
+	: RETURN exp																(A.ReturnStat (SOME exp, RETURNleft))
+	| RETURN																	(A.ReturnStat (NONE, RETURNleft))
+	| BREAK																		(A.BreakStat BREAKleft)
+	
+
+
+exp : assignmentExp																(assignmentExp)
+
+lambdaExp
+	: LPAREN declList RPAREN ARROW ty compoundStat								(A.LambdaExp { formals = declList,
+																							   returnTy = ty,
+																							   body = compoundStat,
+																							   pos = LPARENleft
+																							 }
+																				)
+	
+assignmentExp
+	: orExp																		(orExp)
+	| assignment																(assignment)
+	
+assignment
+	: lvalue assignOperator exp													(A.AssignExp { var = lvalue,
+																							   exp = assignOperator (lvalue, exp, lvalueleft),
+																							   pos = lvalueleft
+																							 }
+																				)
+	
+lvalue
+	: ID																		(A.SimpleVar (S.symbol ID, IDleft))
+	| fieldAccess																(fieldAccess)
+	| arrayAccess																(arrayAccess)
+	
+fieldAccess
+	: callOrConsExp DOT ID														(A.FieldVar (callOrConsExp, S.symbol ID, callOrConsExpleft))
+
+arrayAccess
+	: callOrConsExp LBRACK exp RBRACK											(A.SubscriptVar (callOrConsExp, exp, callOrConsExpleft))
+	
+assignOperator
+	: ASSIGN
+		(fn (lvalue, exp, pos) => exp)
+	| PLUSASSIGN
+		(fn (lvalue, exp, pos) => A.BinOpExp {left = A.VarExp lvalue, oper = A.PlusOp, right = exp, pos = pos})
+	| MINUSASSIGN
+		(fn (lvalue, exp, pos) => A.BinOpExp {left = A.VarExp lvalue, oper = A.MinusOp, right = exp, pos = pos})
+	| TIMESASSIGN
+		(fn (lvalue, exp, pos) => A.BinOpExp {left = A.VarExp lvalue, oper = A.TimesOp, right = exp, pos = pos})
+	| DIVIDEASSIGN
+		(fn (lvalue, exp, pos) => A.BinOpExp {left = A.VarExp lvalue, oper = A.DivideOp, right = exp, pos = pos})
+
+orExp
+	: andExp																	(andExp)
+	| orExp OR andExp															(A.BinOpExp {left = orExp, oper = A.OrOp, right = andExp, pos = orExpleft})
+	
+andExp
+	: eqExp																		(eqExp)
+	| andExp AND eqExp															(A.BinOpExp {left = andExp, oper = A.AndOp, right = eqExp, pos = andExpleft})
+	
+eqExp
+	: relExp																	(relExp)
+	| eqExp EQ relExp															(A.BinOpExp {left = eqExp, oper = A.EqOp, right = relExp, pos = eqExpleft})
+	| eqExp NEQ relExp															(A.BinOpExp {left = eqExp, oper = A.NeqOp, right = relExp, pos = eqExpleft})
+	
+relExp
+	: addExp																	(addExp)
+	| relExp GT addExp															(A.BinOpExp {left = relExp, oper = A.GtOp, right = addExp, pos = relExpleft})
+	| relExp LT addExp															(A.BinOpExp {left = relExp, oper = A.LtOp, right = addExp, pos = relExpleft})
+	| relExp GE addExp															(A.BinOpExp {left = relExp, oper = A.GeOp, right = addExp, pos = relExpleft})
+	| relExp LE addExp															(A.BinOpExp {left = relExp, oper = A.LeOp, right = addExp, pos = relExpleft})
+	
+addExp
+	: mulExp																	(mulExp)
+	| addExp PLUS mulExp														(A.BinOpExp {left = addExp, oper = A.PlusOp, right = mulExp, pos = addExpleft})
+	| addExp MINUS mulExp														(A.BinOpExp {left = addExp, oper = A.MinusOp, right = mulExp, pos = addExpleft})
+	
+mulExp
+	: unaryExp																	(unaryExp)
+	| mulExp TIMES unaryExp														(A.BinOpExp {left = mulExp, oper = A.TimesOp, right = unaryExp, pos = mulExpleft})
+	| mulExp DIVIDE unaryExp													(A.BinOpExp {left = mulExp, oper = A.DivideOp, right = unaryExp, pos = mulExpleft})
+	
+unaryExp
+	: unaryExpNotPlusMinus														(unaryExpNotPlusMinus)
+	| preIncExp																	(preIncExp)
+	| preDecExp																	(preDecExp)
+	| PLUS unaryExp																(unaryExp)
+	| MINUS unaryExp															(A.UnOpExp {exp = unaryExp, oper = A.UminusOp, pos = MINUSleft})
+	
+preIncExp
+	: PLUSPLUS unaryExp															(A.PrefixOpExp {exp = unaryExp, oper = A.PlusOp, pos = PLUSPLUSleft})
+	
+preDecExp
+	: MINUSMINUS unaryExp														(A.PrefixOpExp {exp = unaryExp, oper = A.MinusOp, pos = MINUSMINUSleft})
+	
+unaryExpNotPlusMinus
+	: postfixExp																(postfixExp)
+	| BANG unaryExp																(A.UnOpExp {exp = unaryExp, oper = A.BangOp, pos = BANGleft})
+	
+postfixExp
+	: callOrConsExp																(callOrConsExp)
+	| postIncExp																(postIncExp)
+	| postDecExp																(postDecExp)
+
+callOrConsExp
+	: primaryExp																(primaryExp)
+	| callOrConsExp LPAREN expList RPAREN										(A.CallOrConsExp {func = callOrConsExp, args = expList, pos = callOrConsExpleft})
+	
+expList
+	: expList'																	(expList')
+	|																			([])
+	
+expList'
+	: exp COMMA expList'														(exp :: expList')
+	| exp																		([exp])
+	
+arrayAlloc
+	: ARRAY LT ty GT LPAREN exp RPAREN											(A.ArrayExp {ty = ty, exp = exp, pos = ARRAYleft})
+	
+primaryExp
+	: literalExp																(literalExp)
+	| THIS																		(A.ThisExp)
+	| lvalue																	(A.VarExp lvalue)
+	| arrayAlloc																(arrayAlloc)
+	| lambdaExp																	(lambdaExp)
+	| LPAREN exp RPAREN															(exp)
+
+literalExp
+	: INT																		(A.IntExp INT)
+	| FLOAT																		(A.FloatExp FLOAT)
+	| BOOL																		(A.BoolExp BOOL)
+	| STRING																	(A.StringExp STRING)
+	| CHAR																		(A.CharExp CHAR)
+
+postIncExp
+	: postfixExp PLUSPLUS														(A.PostfixOpExp {exp = postfixExp, oper = A.PlusOp, pos = postfixExpleft})
+	
+postDecExp
+	: postfixExp MINUSMINUS														(A.PostfixOpExp {exp = postfixExp, oper = A.MinusOp, pos = postfixExpleft})
